@@ -97,3 +97,5 @@ df_venues_search.reset_index(drop=True, inplace=True)
 
 # export dataframe df_venues in csv
 df_venues_search.to_csv('insert csv file path')
+
+print('Done')
