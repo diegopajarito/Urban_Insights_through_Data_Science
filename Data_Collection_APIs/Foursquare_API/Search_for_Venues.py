@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 
 # open csv file with containing the limits fo a grid cell array
-df_grid = pd.read_csv('../Path/to/grid.csv')
+df_grid = pd.read_csv('./grid.csv')
 # We
 df_grid = df_grid[['left', 'top']]
 
@@ -16,6 +16,12 @@ df_grid = df_grid.iloc[0:500]
 
 # create an empty list to store the dictionaries containing data retrived in the loop
 list_of_dictionaries = []
+# set new lists to set a dataframe later on
+venues_id = []
+names = []
+latitudes = []
+longitudes = []
+category = []
 
 # url taken by the Foursquare API developers page -> Places API -> Venues -> Search for venues
 url = 'https://api.foursquare.com/v2/venues/search'
@@ -48,13 +54,7 @@ for i in df_grid.index:
 
     # append to the new dictionary created
     list_of_dictionaries.append(data)
-
-# set new lists to set a dataframe later on
-venues_id = []
-names = []
-latitudes = []
-longitudes = []
-category = []
+    # end of loop
 
 # this for loop iterates through the list of dictionaries to extract them one by one
 for det_venues in list_of_dictionaries:
@@ -92,7 +92,7 @@ df_venues_search = df_venues.drop_duplicates(subset=['Venues_id'], keep='last')
 # reset the row id values
 df_venues_search.reset_index(drop=True, inplace=True)
 
-# export dataframe df_venues in csv
-df_venues_search.to_csv('insert csv file path')
+# export data frame df_venues in csv
+df_venues_search.to_csv('./output.csv')
 
-print('Done')
+print('Successfully exported %i items from Foursquare' % len(df_venues_search))
